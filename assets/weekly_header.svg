@@ -1,0 +1,206 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 850 320" width="100%" height="100%">
+  <defs>
+    <!-- Background Gradient -->
+    <linearGradient id="bg-grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#05070f" />
+      <stop offset="50%" stop-color="#0b0f19" />
+      <stop offset="100%" stop-color="#04060b" />
+    </linearGradient>
+
+    <!-- Neon Green Glow -->
+    <filter id="glow-green" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="6" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Neon Purple Glow -->
+    <filter id="glow-purple" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur" />
+      <feMerge>
+        <feMergeNode in="blur" />
+        <feMergeNode in="SourceGraphic" />
+      </feMerge>
+    </filter>
+
+    <!-- Grid Pattern -->
+    <pattern id="grid" width="30" height="30" patternUnits="userSpaceOnUse">
+      <path d="M 30 0 L 0 0 0 30" fill="none" stroke="#162238" stroke-width="1" stroke-opacity="0.7"/>
+    </pattern>
+
+    <!-- Glowing Line Gradients -->
+    <linearGradient id="line-grad-1" x1="0%" y1="0%" x2="100%" y2="0%">
+      <stop offset="0%" stop-color="#39FF14" stop-opacity="0" />
+      <stop offset="50%" stop-color="#39FF14" stop-opacity="1" />
+      <stop offset="100%" stop-color="#8A2BE2" stop-opacity="0" />
+    </linearGradient>
+
+    <linearGradient id="line-grad-2" x1="100%" y1="0%" x2="0%" y2="0%">
+      <stop offset="0%" stop-color="#8A2BE2" stop-opacity="0" />
+      <stop offset="50%" stop-color="#8A2BE2" stop-opacity="1" />
+      <stop offset="100%" stop-color="#00ffff" stop-opacity="0" />
+    </linearGradient>
+  </defs>
+
+  <style>
+    @keyframes float {
+      0% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(0.5deg); }
+      100% { transform: translateY(0px) rotate(0deg); }
+    }
+
+    @keyframes pulse {
+      0% { opacity: 0.3; }
+      50% { opacity: 0.9; }
+      100% { opacity: 0.3; }
+    }
+
+    @keyframes scanline {
+      0% { transform: translateY(-150px); }
+      100% { transform: translateY(320px); }
+    }
+
+    @keyframes grid-move {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(30px); }
+    }
+
+    @keyframes text-glow {
+      0% { text-shadow: 0 0 5px rgba(57, 255, 20, 0.2), 0 0 10px rgba(57, 255, 20, 0.2); }
+      50% { text-shadow: 0 0 10px rgba(57, 255, 20, 0.6), 0 0 20px rgba(57, 255, 20, 0.4), 0 0 30px rgba(57, 255, 20, 0.2); }
+      100% { text-shadow: 0 0 5px rgba(57, 255, 20, 0.2), 0 0 10px rgba(57, 255, 20, 0.2); }
+    }
+
+    @keyframes cyber-dash {
+      0% { stroke-dashoffset: 1000; }
+      100% { stroke-dashoffset: 0; }
+    }
+
+    .bg-grid {
+      animation: grid-move 3s linear infinite;
+    }
+
+    .floater {
+      animation: float 6s ease-in-out infinite;
+      transform-origin: center;
+    }
+
+    .pulser {
+      animation: pulse 3s ease-in-out infinite;
+    }
+
+    .scan {
+      animation: scanline 8s linear infinite;
+    }
+
+    .glow-txt-green {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      fill: #39FF14;
+      animation: text-glow 4s ease-in-out infinite;
+    }
+
+    .glow-txt-purple {
+      font-family: 'Courier New', Courier, monospace;
+      font-weight: bold;
+      fill: #8A2BE2;
+    }
+
+    .outline-cyber {
+      stroke-dasharray: 1000;
+      animation: cyber-dash 20s linear infinite;
+    }
+  </style>
+
+  <!-- Solid Background -->
+  <rect width="850" height="320" fill="url(#bg-grad)" />
+
+  <!-- Moving Cyber Grid (Perspective Styled) -->
+  <g opacity="0.35">
+    <mask id="grid-mask">
+      <linearGradient id="mask-grad" x1="0%" y1="0%" x2="0%" y2="100%">
+        <stop offset="0%" stop-color="#fff" stop-opacity="0.1" />
+        <stop offset="60%" stop-color="#fff" stop-opacity="0.8" />
+        <stop offset="100%" stop-color="#fff" stop-opacity="1" />
+      </linearGradient>
+      <rect width="850" height="320" fill="url(#mask-grad)" />
+    </mask>
+    <g mask="url(#grid-mask)">
+      <rect class="bg-grid" width="850" height="350" fill="url(#grid)" />
+    </g>
+  </g>
+
+  <!-- Receding Perspective lines to simulate 3D ground -->
+  <g opacity="0.4">
+    <line x1="425" y1="80" x2="-200" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="0" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="200" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="425" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="650" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="850" y2="320" stroke="#162238" stroke-width="1.5" />
+    <line x1="425" y1="80" x2="1050" y2="320" stroke="#162238" stroke-width="1.5" />
+  </g>
+
+  <!-- Holographic Scanline -->
+  <rect class="scan" width="850" height="4" fill="#39FF14" opacity="0.12" filter="url(#glow-green)" />
+
+  <!-- Animated Glowing Tech Lines -->
+  <path class="outline-cyber" d="M -50 250 L 250 250 L 300 290 L 800 290" fill="none" stroke="url(#line-grad-1)" stroke-width="2" />
+  <path class="outline-cyber" d="M 900 70 L 600 70 L 550 30 L 50 30" fill="none" stroke="url(#line-grad-2)" stroke-width="2" />
+
+  <!-- Floating Hologram Circle Elements (3D Cyber Compass/Radar) -->
+  <g class="floater" transform="translate(110, 150)">
+    <circle cx="0" cy="0" r="70" fill="none" stroke="#8A2BE2" stroke-width="1.5" stroke-dasharray="10, 5" opacity="0.4" />
+    <circle cx="0" cy="0" r="55" fill="none" stroke="#39FF14" stroke-width="1" stroke-dasharray="50, 8" opacity="0.6" filter="url(#glow-green)" />
+    <circle cx="0" cy="0" r="40" fill="none" stroke="#162238" stroke-width="2" />
+    
+    <!-- Crosshairs -->
+    <line x1="-80" y1="0" x2="80" y2="0" stroke="#8A2BE2" stroke-width="0.5" opacity="0.5" />
+    <line x1="0" y1="-80" x2="0" y2="80" stroke="#8A2BE2" stroke-width="0.5" opacity="0.5" />
+    
+    <!-- Cyber Logo Symbol (Shield / Binary) -->
+    <path d="M -20 -25 L 20 -25 L 25 5 L 0 30 L -25 5 Z" fill="none" stroke="#39FF14" stroke-width="2" filter="url(#glow-green)" />
+    <path d="M -10 -15 L 10 -15 L 12 5 L 0 20 L -12 5 Z" fill="none" stroke="#8A2BE2" stroke-width="1" />
+    <circle cx="0" cy="0" r="4" fill="#39FF14" class="pulser" />
+  </g>
+
+  <!-- Title & Subtitle Group (Floating) -->
+  <g class="floater" transform="translate(425, 140)">
+    <!-- Main Title -->
+    <text text-anchor="middle" y="5" class="glow-txt-green" font-size="34" letter-spacing="4">ETHICAL HACKING ROADMAP</text>
+    <!-- Border Accents for Title -->
+    <path d="M -260 -25 L -240 -25 L -230 -15" fill="none" stroke="#39FF14" stroke-width="2" filter="url(#glow-green)" />
+    <path d="M 260 -25 L 240 -25 L 230 -15" fill="none" stroke="#39FF14" stroke-width="2" filter="url(#glow-green)" />
+    <path d="M -260 25 L -240 25 L -230 15" fill="none" stroke="#39FF14" stroke-width="2" />
+    <path d="M 260 25 L 240 25 L 230 15" fill="none" stroke="#39FF14" stroke-width="2" />
+
+    <!-- Subtitle -->
+    <text text-anchor="middle" y="45" font-family="'Courier New', Courier, monospace" font-size="14" fill="#cfd8dc" letter-spacing="6" opacity="0.9">
+      <tspan fill="#8A2BE2" font-weight="bold">12 WEEKS</tspan> OF SYSTEMATIC OFFENSIVE &amp; DEFENSIVE MASTERY
+    </text>
+  </g>
+
+  <!-- Right Floating 3D Cyber Deck/Data Panel -->
+  <g class="floater" transform="translate(730, 140)">
+    <!-- Outer hexagonal bounds -->
+    <polygon points="0,-60 50,-30 50,30 0,60 -50,30 -50,-30" fill="none" stroke="#8A2BE2" stroke-width="1.5" filter="url(#glow-purple)" opacity="0.6" />
+    
+    <!-- Code details -->
+    <text x="-35" y="-15" font-family="monospace" font-size="8" fill="#39FF14" opacity="0.8">sys_init... OK</text>
+    <text x="-35" y="-3" font-family="monospace" font-size="8" fill="#39FF14" opacity="0.8">port_scan... 80%</text>
+    <text x="-35" y="9" font-family="monospace" font-size="8" fill="#8A2BE2" opacity="0.8">bypass_fw... DONE</text>
+    <text x="-35" y="21" font-family="monospace" font-size="8" fill="#00ffff" class="pulser">HACK://ACTIVE</text>
+
+    <!-- Mini blinking grid dots -->
+    <circle cx="35" cy="-25" r="2.5" fill="#39FF14" class="pulser" />
+    <circle cx="35" cy="-15" r="2.5" fill="#8A2BE2" opacity="0.5" />
+    <circle cx="35" cy="-5" r="2.5" fill="#00ffff" class="pulser" />
+  </g>
+
+  <!-- Bottom Accent Lines & Warning Text -->
+  <text x="425" y="305" text-anchor="middle" font-family="monospace" font-size="10" fill="#4f5b66" letter-spacing="1">
+    STAY CURIOUS. STAY ETHICAL. AUTHORIZED TESTING ONLY.
+  </text>
+</svg>
