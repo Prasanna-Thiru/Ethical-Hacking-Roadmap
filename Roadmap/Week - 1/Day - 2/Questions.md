@@ -1,6 +1,6 @@
 # Kali Linux Basics
 
-· Kali Overview  
-. Install Kali Linux  
-. Update & Upgrade  
-. Basic Commands
+1. Kali Overview  
+2. Install Kali Linux  
+3. Update & Upgrade  
+4. Basic Commands
