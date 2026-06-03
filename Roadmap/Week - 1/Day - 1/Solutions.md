@@ -4,7 +4,7 @@ Ethical Hacking is the authorized practice of bypassing system security to ident
 
 # 2. Types of Hackers?
 
-White Hat — Ethical hackers who hack with permission and legal authorization /n
+White Hat — Ethical hackers who hack with permission and legal authorization
 Black Hat — Malicious hackers who hack without permission for personal gain
 Grey Hat — In between, no permission but no serious malicious intent
 Script Kiddie — Uses existing tools without understanding how they work
