@@ -29,5 +29,5 @@ Host Machine — Your main computer running Windows, Mac or Linux
 Hypervisor — VirtualBox or VMware to run virtual machines  
 Kali Linux VM — Your primary attack machine  
 Target VM — Vulnerable machines like Metasploitable or DVWA  
-Network Setup — NAT or Host-Only network between VMs
+Network Setup — NAT or Host-Only network between VMs  
 Tools — Nmap, Burp Suite, Metasploit pre-installed in Kali.
