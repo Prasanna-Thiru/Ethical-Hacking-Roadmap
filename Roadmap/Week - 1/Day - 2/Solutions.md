@@ -19,10 +19,10 @@ This fetches new package lists, upgrades installed packages, and applies distrib
 # 4. Basic Commands    
 • pwd → Show current directory  
 • ls → List files and folders    
-• cd <dir> → Change directory    
-• cp <src> <dest> → Copy files    
-• mv <src> <dest> → Move/rename files  
-• rm <file> → Delete files  
-• apt install <package> → Install software  
-• man <command> → Show manual/help for a command
+• cd (dir) → Change directory    
+• cp (src>) (dest) → Copy files    
+• mv (src) (dest) → Move/rename files  
+• rm (file) → Delete files  
+• apt install (package) → Install software  
+• man (command) → Show manual/help for a command
 
