@@ -11,9 +11,9 @@ Step 5: Complete setup with username, password, and partitioning.
 # 3. Update & Upgrade  
 Keeping Kali up to date ensures you have the latest tools and patches.
 Commands:  
-sudo apt update  
-sudo apt upgrade -y  
-sudo apt dist-upgrade -y  
+• sudo apt update  
+• sudo apt upgrade -y  
+• sudo apt dist-upgrade -y  
 This fetches new package lists, upgrades installed packages, and applies distribution upgrades.
 
 # 4. Basic Commands    
