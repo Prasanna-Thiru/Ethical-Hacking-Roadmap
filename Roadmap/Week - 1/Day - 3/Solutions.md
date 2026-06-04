@@ -2,19 +2,19 @@
 
 • Linux organizes everything into a hierarchical tree structure starting at / (root).  
 
-Common directories:  
+• Common directories:  
 
-•  /home → personal files for each user.  
+    • /home → personal files for each user.  
 
-• /etc → system configuration files.  
+    • /etc → system configuration files.  
 
-• /bin → essential system commands.  
+    • /bin → essential system commands.  
 
-• /var → logs and variable data.  
+    • /var → logs and variable data.  
 
-• /tmp → temporary files.  
+    • /tmp → temporary files.  
 
-• Unlike Windows, Linux doesn’t use drive letters (C:, D:). Instead, all devices are mounted into this single tree.  
+    • Unlike Windows, Linux doesn’t use drive letters (C:, D:). Instead, all devices are mounted into this single tree.  
 
 # 🔑 Permissions  
 
