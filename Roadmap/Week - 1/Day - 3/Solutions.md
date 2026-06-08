@@ -1,117 +1,281 @@
-# 📂 File System  
+# Linux Foundations — Solutions
 
-• Linux organizes everything into a hierarchical tree structure starting at / (root).  
+## 1. File System
 
-• Common directories:  
+### Simple definition
+- The Linux filesystem is a single hierarchical tree rooted at `/`.
+- Directories are mounted under `/` instead of using drive letters.
 
-    • /home → personal files for each user.  
+### Why it matters in cybersecurity
+- Understanding Linux paths helps analysts locate logs, configuration files, and hidden malware.
+- Attackers often hide files in common directories, so filesystem knowledge is essential.
 
-    • /etc → system configuration files.  
+### How it works step-by-step
+1. The root filesystem `/` contains core directories.
+2. Each directory has a specific purpose, such as `/etc` for configs and `/var` for logs.
+3. Devices and additional filesystems are mounted into this tree.
+4. Users navigate and manage files using these directories.
 
-    • /bin → essential system commands.  
+### Common attack methods
+- Hiding persistence scripts in `/etc/init.d`, `/usr/local/bin`, or `/tmp`.
+- Placing backdoors in `/home` or web directories.
+- Using cron jobs to maintain access.
 
-    • /var → logs and variable data.  
+### IOCs
+- Unexpected files in system directories.
+- Modified binaries or scripts in startup locations.
+- New executable files in `/tmp` or `/var/tmp`.
 
-    • /tmp → temporary files.  
+### Logs and events to monitor
+- File integrity monitoring on `/etc`, `/usr/bin`, and `/var/log`.
+- Audit logs for file creation and modifications.
+- Access to sensitive directories like `/root` or `/etc/shadow`.
 
-    • Unlike Windows, Linux doesn’t use drive letters (C:, D:). Instead, all devices are mounted into this single tree.  
+### Detection techniques using SIEM tools
+- Alert on creation of executable files in non-standard locations.
+- Correlate unexpected file changes with process execution.
 
-# 🔑 Permissions  
+### Prevention and mitigation methods
+- Harden directory permissions and use file integrity monitoring.
+- Limit user write access to system directories.
 
-• Every file/directory has three types of permissions:  
+### Incident response actions
+- Identify suspicious files and their creation context.
+- Preserve evidence and scan for related malicious activity.
 
-    • Read (r) → view contents.
+### Real-world example
+- A Linux server infected by a web shell hidden in `/var/www/html/uploads`.
 
-    • Write (w) → modify or delete.
+### Interview Q&A
+- Q: "What is the root directory in Linux?"
+  A: "`/`, the top of the filesystem hierarchy."
+- Q: "Where are logs usually stored?"
+  A: "In `/var/log`."
 
-    • Execute (x) → run as a program/script.
+### Practical lab exercises
+- Explore the directory structure with `ls /`.
+- Find system directories and understand their purposes.
 
-• Permissions apply to:  
+### TryHackMe / Hack The Box practice suggestions
+- TryHackMe: `Linux Fundamentals`, `Filesystem Navigation`.
+- HTB: beginner boxes where file system enumeration is required.
 
-    • Owner (the user who created the file).
+### Important tools used
+- `ls`, `find`, `stat`, `mount`, `df`, `du`.
 
-    • Group (a set of users).
+### Key commands
+- `ls /`
+- `ls -al /etc`
+- `find / -maxdepth 2 -type d`
 
-    • Others (everyone else).
+### Summary
+- Linux filesystem knowledge is foundational for both defensive and offensive security work.
 
-• Example: -rw-r--r--  
+## 2. Permissions
 
-    • Owner: read/write
+### Simple definition
+- Permissions control read, write, and execute access for owner, group, and others.
 
-    • Group: read
+### Why it matters in cybersecurity
+- Incorrect permissions can allow unauthorized access or privilege escalation.
+- Attackers exploit weak permissions to modify files or execute malicious code.
 
-    • Others: read
+### How it works step-by-step
+1. Each file stores permissions like `-rw-r--r--`.
+2. The first set is owner rights, the second is group rights, and the third is others.
+3. Special bits like SUID and SGID grant elevated execution rights.
+4. Use `chmod` and `chown` to adjust permissions and ownership.
 
-• Commands:  
+### Common attack methods
+- Writable `/etc/passwd` or `/etc/shadow` files.
+- SUID binaries abused for privilege escalation.
+- World-writable directories used to drop malware.
 
-    • ls -l → view permissions.
+### IOCs
+- Files or directories with unexpected `777` permissions.
+- Unknown SUID/SGID binaries.
+- Permission changes on sensitive files.
 
-    • chmod → change permissions.
+### Logs and events to monitor
+- File audit logs for chmod/chown operations.
+- Access denied errors in logs from attempted unauthorized access.
 
-    • chown → change ownership.  
+### Detection techniques using SIEM tools
+- Alert on permission changes to critical files.
+- Detect unusual SUID/SGID binaries and world-writable directories.
 
-# 👥 Users & Groups
+### Prevention and mitigation methods
+- Enforce least privilege and regularly audit file permissions.
+- Remove unnecessary SUID/SGID settings.
 
-• Users: Each person/system process has a unique account.
+### Incident response actions
+- Review historical permission changes.
+- Restore secure permissions and investigate how changes occurred.
 
-• Groups: Collections of users with shared permissions.
+### Real-world example
+- A compromised web server allowed an attacker to write a shell because `/var/www/html` was world-writable.
 
-• Types of users:
+### Interview Q&A
+- Q: "What does `chmod 755` mean?"
+  A: "Owner can read/write/execute; group and others can read and execute."
+- Q: "How do you view file permissions?"
+  A: "Use `ls -l`."
 
-    • Root → superuser with full control.
+### Practical lab exercises
+- Change file permissions with `chmod`.
+- Identify SUID binaries with `find / -perm -4000 -type f`.
 
-    • Regular users → limited access.
+### TryHackMe / Hack The Box practice suggestions
+- TryHackMe: `Linux Privilege Escalation`, `Permissions`.
+- HTB: boxes that require permission misconfiguration discovery.
 
-• Important files:
+### Important tools used
+- `ls`, `chmod`, `chown`, `find`, `getfacl`.
 
-    • /etc/passwd → user account info.
+### Key commands
+- `ls -l /etc/passwd`
+- `chmod 644 file.txt`
+- `chown user:group file.txt`
 
-    • /etc/group → group info.
+### Summary
+- Permissions are a core defense mechanism. SOC analysts must understand and monitor them to prevent misuse.
 
-• Commands:
+## 3. Users & Groups
 
-    • adduser username → create user.
+### Simple definition
+- Users are accounts on a Linux system; groups are collections of users with shared permissions.
 
-    • passwd username → set/change password.
+### Why it matters in cybersecurity
+- User and group management controls access to systems and data.
+- Misconfigured accounts are common entry points for attackers.
 
-    • usermod -aG group username → add user to group.
+### How it works step-by-step
+1. Users are defined in `/etc/passwd`.
+2. Groups are defined in `/etc/group`.
+3. Users can belong to multiple groups.
+4. Group membership determines file access and privileges.
 
-🛠️ File Operations
+### Common attack methods
+- Weak or default passwords on user accounts.
+- Privilege escalation through group membership.
+- Creation of hidden or unauthorized accounts.
 
-• Navigation:
+### IOCs
+- New accounts created unexpectedly.
+- Accounts added to privileged groups like `sudo`.
+- Login activity from unusual users.
 
-    • pwd → show current directory.
+### Logs and events to monitor
+- Authentication logs (`/var/log/auth.log`, `/var/log/secure`).
+- `/etc/passwd` and `/etc/group` modification events.
+- sudo and su command usage.
 
-    • cd → change directory.
+### Detection techniques using SIEM tools
+- Alert on new user creation and group membership changes.
+- Monitor privilege escalation and sudo activity.
 
-• Listing:
+### Prevention and mitigation methods
+- Enforce strong passwords and MFA where possible.
+- Use least privilege and remove obsolete accounts.
 
-    • ls → list files.
+### Incident response actions
+- Disable suspicious accounts immediately.
+- Audit account activity and group changes.
 
-    • ls -l → detailed view.
+### Real-world example
+- An attacker creates a backdoor user account in `/etc/passwd` to maintain access.
 
-• Creation:
+### Interview Q&A
+- Q: "Where are Linux users stored?"
+  A: "In `/etc/passwd` and password hashes in `/etc/shadow`."
+- Q: "How do you add a user to a group?"
+  A: "Use `usermod -aG group username`."
 
-    • touch file.txt → create empty file.
+### Practical lab exercises
+- Create a new user and assign group membership.
+- Inspect `/etc/passwd` and `/etc/group`.
 
-    • mkdir folder → create directory.
+### TryHackMe / Hack The Box practice suggestions
+- TryHackMe: `Linux User Management`, `Privilege Escalation`.
 
-• Copy/Move/Delete:
+### Important tools used
+- `adduser`, `useradd`, `usermod`, `passwd`, `groups`.
 
-    • cp source destination → copy.
+### Key commands
+- `cat /etc/passwd`
+- `cat /etc/group`
+- `sudo adduser testuser`
+- `sudo usermod -aG sudo testuser`
 
-    • mv source destination → move/rename.
+### Summary
+- User and group management is fundamental for secure Linux operations and effective threat response.
 
-    • rm file.txt → delete file.
+## 4. File Operations
 
-    • rm -r folder → delete folder recursively.
+### Simple definition
+- File operations are commands used to create, move, copy, and inspect files and directories.
 
-• Viewing contents:
+### Why it matters in cybersecurity
+- Attackers and defenders both depend on file operations. Analysts need to manipulate files safely during investigations.
 
-    • cat file.txt → show contents.
+### How it works step-by-step
+1. Navigate directories with `cd`.
+2. List contents with `ls`.
+3. Create files and directories with `touch` and `mkdir`.
+4. Copy, move, or delete files with `cp`, `mv`, and `rm`.
+5. View file contents with `cat`, `less`, `head`, and `tail`.
 
-    • less file.txt → scroll through file.
+### Common attack methods
+- Attackers copy persistence scripts into startup directories.
+- Malicious files are moved into trusted paths.
+- Temporary directories are used to stage payloads.
 
-    • head -n 10 file.txt → first 10 lines.
+### IOCs
+- New suspicious files in `/tmp`, `/var/tmp`, or web directories.
+- Deleted or moved files in sensitive locations.
 
-    • tail -n 10 file.txt → last 10 lines.•
+### Logs and events to monitor
+- File access and deletion events from audit logs.
+- Process activity when files are created or modified.
+
+### Detection techniques using SIEM tools
+- Alert on file creation in unusual directories.
+- Correlate file operations with suspicious process execution.
+
+### Prevention and mitigation methods
+- Monitor filesystem activity and restrict write access.
+- Use immutable file flags for critical files.
+
+### Incident response actions
+- Capture a snapshot of file system state.
+- Preserve suspicious files for analysis.
+
+### Real-world example
+- A threat actor drops a reverse shell script in `/tmp` and executes it.
+
+### Interview Q&A
+- Q: "How do you create an empty file?"
+  A: "Use `touch filename`."
+- Q: "How can you view the last 10 lines of a log file?"
+  A: "Use `tail -n 10 logfile`."
+
+### Practical lab exercises
+- Create, copy, move, and delete test files.
+- Use `less`, `head`, and `tail` to inspect file contents.
+
+### TryHackMe / Hack The Box practice suggestions
+- TryHackMe: `Bash Basics`, `Linux File Management`.
+
+### Important tools used
+- `touch`, `mkdir`, `cp`, `mv`, `rm`, `cat`, `less`, `head`, `tail`.
+
+### Key commands
+- `touch test.txt`
+- `mkdir labdir`
+- `cp test.txt labdir/`
+- `mv test.txt labdir/`
+- `rm labdir/test.txt`
+- `less /var/log/auth.log`
+
+### Summary
+- File operations are daily essentials for Linux security work. Mastering them supports both defensive investigations and offensive testing.
